@@ -1,5 +1,6 @@
 'use strict';
 let kkey = 0;
+let i=0;
 const myLibrary = [];
 addBookToLibrary("Freshlife28", "Bazilio", 129, 1);
 addBookToLibrary("Harry Potter and the Philosopher's Stone", "Joanne Rowling", 357, 1);
@@ -8,6 +9,7 @@ addBookToLibrary("Harry Potter and the Philosopher's Stone", "Joanne Rowling", 3
 function addBookToLibrary(title, author, pages, status) {
   let mybook = new Book (title, author, pages, status)
   myLibrary.push(mybook);
+  makeShelf()
   console.log(myLibrary);
 }
 
@@ -20,23 +22,29 @@ function Book (title,author,pages,status) {
 }
 
 // bookshelf
+makeShelf();
+function makeShelf() {
 const shelf = document.querySelector("tbody"); 
-for (let i=0; i <myLibrary.length; i++) {
+shelf.textContent = "";
+for ( i=0; i <myLibrary.length; i++) {
 const tr = document.createElement("tr")
 tr.innerHTML = `<td> ${myLibrary[i].title} </td>
                 <td> ${myLibrary[i].author}</td>
                 <td> ${myLibrary[i].pages} </td>
                 <td> ${myLibrary[i].status}</td>
-                <td><button class="btnDel">Delete</button>
+                <td><button class="btnDel" id=${i}>Delete</button>
                 </tr>`;
 shelf.appendChild(tr);}
 
 shelf.addEventListener("click", function(event) {
   if (event.target.classList.contains("btnDel")) {
+    console.log(i);
+    myLibrary.splice(i-1,1);
+    
       event.target.closest("tr").remove(); // Удаляет строку
   }
 });
-
+}
 const btnNew = document.getElementById("btnNew");
 btnNew.addEventListener("click", () => {
 if (kkey == 0) { menu () }});
@@ -95,6 +103,7 @@ function menu() {
   container.appendChild(btnAdd);
 
   btnAdd.addEventListener("click", () => createBook())
+  
 } 
 
 function createBook() {
@@ -103,5 +112,9 @@ function createBook() {
   const authorValue = document.getElementById("author");
   const pagesValue = document.getElementById("pages");
   const statusValue = document.getElementById("status");  
-  addBookToLibrary(titleValue.value, authorValue.value, pagesValue.value, statusValue.value)
+  addBookToLibrary(titleValue.value, authorValue.value, pagesValue.value, statusValue.value);
+  titleValue.value ="";
+  authorValue.value = "";
+  pagesValue.value = "";
+  statusValue.value = "";
 }
