@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 80%;
+
+} 
+
+th, td {
+  padding: 0.25rem;
+  text-align: left;
+  border: 1px solid #ccc; padding: 15px;
+
+}
+
+tbody tr:nth-child(odd) {
+  background: #eee;
+}
+
+tr:nth-child(even) td {
+  background-color: rgb(250,250,250);
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(245,245,245);
+}
+
+tbody tr:hover {
+  background-color: yellow;
+  color: #09196c;
+}
+
+th {
+  font-weight: 700;
+}
+.mainContainer {
+    display: grid;
+    grid-template-rows: minmax(100px,100px) 3fr;
+    height: 100vh;
+}
+
+.mainContainer div {
+    padding: 5px;
+} 
+
+.header {
+    grid-row: 1;
+    background-color: rgb(251, 250, 249);  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.shelf {
+    grid-row: 2;
+    margin: 0 auto;
+}
+
+
+  button.btnNew {
+    background-color: #acacac;
+    font-size: 2rem;
+    padding: 10px 20px;
+    font-family: Norse, 'Times New Roman', Times, serif;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background 0.3s, transform 0.2s;
+    }
+    
+    button.btnNew:hover {
+    background-color: #8f8f8f;
+    color: white;
+    transform: translateY(-2px);
+  }
+    
+  button.btnNew:active {
+    transform: translateY(2px);
+  }
+
+  .addForm {
+    display: flex;
+    gap:10px;
+    align-items: center;
+  }
+  .addForm input {
+    border-radius: 5px;
+    height: 20px;
+    padding: 5px;
+  }
+
+  .addBtn {
+    padding: 5px;
+    background-color: #1232cf;
+    border-radius: 5px;
+  }
