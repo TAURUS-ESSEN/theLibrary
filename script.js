@@ -1,16 +1,15 @@
 'use strict';
-let kkey = 0;
-let i=0;
+
+let i = 0;
 const myLibrary = [];
-addBookToLibrary("Freshlife28", "Bazilio", 129, 1);
-addBookToLibrary("Harry Potter and the Philosopher's Stone", "Joanne Rowling", 357, 1);
+addBookToLibrary("Freshlife28", "Bazilio", 129, "yes");
+addBookToLibrary("Harry Potter and the Philosopher's Stone", "Joanne Rowling", 357, "no");
 
 //just add object-books to Array-Library 
 function addBookToLibrary(title, author, pages, status) {
   let mybook = new Book (title, author, pages, status)
   myLibrary.push(mybook);
-  makeShelf()
-  console.log(myLibrary);
+  makeShelf();
 }
 
 // Constructor
@@ -27,35 +26,39 @@ function makeShelf() {
 const shelf = document.querySelector("tbody"); 
 shelf.textContent = "";
 for ( i=0; i <myLibrary.length; i++) {
-const tr = document.createElement("tr")
-tr.innerHTML = `<td> ${myLibrary[i].title} </td>
-                <td> ${myLibrary[i].author}</td>
-                <td> ${myLibrary[i].pages} </td>
-                <td> ${myLibrary[i].status}</td>
-                <td><button class="btnDel" id=${i}>Delete</button>
-                </tr>`;
-shelf.appendChild(tr);}
+  const tr = document.createElement("tr");
+  tr.setAttribute("data-index", i);
+  tr.innerHTML = `<td> ${myLibrary[i].title} </td>
+                  <td> ${myLibrary[i].author}</td>
+                  <td> ${myLibrary[i].pages} </td>
+                  <td> <a href="javascript:void(0);" onclick="myLibrary[${i}].toggleFunction.call(myLibrary[${i}])">${myLibrary[i].status}</a></td>
+                  <td><button class="btnDel" id=${i}>Delete</button>
+                  </tr>`;
+  shelf.appendChild(tr);
+}
 
+// button delete Book
 shelf.addEventListener("click", function(event) {
   if (event.target.classList.contains("btnDel")) {
-    console.log(i);
     myLibrary.splice(i-1,1);
-    
-      event.target.closest("tr").remove(); // Удаляет строку
+    event.target.closest("tr").remove(); 
   }
 });
 }
-const btnNew = document.getElementById("btnNew");
-btnNew.addEventListener("click", () => {
-if (kkey == 0) { menu () }});
 
+const newBtn = document.getElementById("newBtn");
+newBtn.addEventListener("click", () => {
+  menu () });
+const container = document.getElementById("addForm");
 function menu() {
-  kkey = 1;
-  const container = document.getElementById("addForm");
+  
+  container.innerHTML = "";
+  newBtn.style.display = "none";
   const inputTitle = document.createElement("input");
   const inputTitleLabel = document.createElement("label")
   inputTitleLabel.textContent = "Title: "
   inputTitle.id = "title";
+  inputTitle.required = "true";
   container.appendChild(inputTitleLabel);
   container.appendChild(inputTitle);
 
@@ -63,6 +66,7 @@ function menu() {
   const inputAuthorLabel = document.createElement("label");
   inputAuthorLabel.textContent = "Author: ";
   inputAuthor.id = "author";
+  inputAuthor.required = "true";
   container.appendChild(inputAuthorLabel);
   container.appendChild(inputAuthor);
   
@@ -70,31 +74,31 @@ function menu() {
   const inputPagesLabel = document.createElement("label");
   inputPagesLabel.textContent = "Pages: ";
   inputPages.id = "pages";
+  inputPages.required = "true";
   inputPages.maxLength = "4";
+  inputPages.type = "number";
   container.appendChild(inputPagesLabel);
   container.appendChild(inputPages);
 
-  const inputStatus = document.createElement("input");
+
+  const inputStatusYes = document.createElement("input");
   const inputStatusLabel = document.createElement("label");
-  inputStatusLabel.textContent = "Status: ";
-  inputStatus.id = "status";
-  inputStatus.maxLength = "4";
+  inputStatusYes.type = "radio";
+  inputStatusYes.name = "status";
+  inputStatusYes.value = "yes";
+  inputStatusLabel.textContent = "Yes: ";
   container.appendChild(inputStatusLabel);
-  container.appendChild(inputStatus);
-  // const inputStatusYes = document.createElement("input");
-  // const inputStatusLabel = document.createElement("label");
-  // inputStatusYes.type = "radio";
-  // inputStatusLabel.textContent = "Yes: ";
-  // container.appendChild(inputStatusLabel);
-  // container.appendChild(inputStatusYes);
+  container.appendChild(inputStatusYes);
 
   
-  // const inputStatusNo = document.createElement("input");
-  // const inputStatusLabelNo = document.createElement("label");
-  // inputStatusNo.type = "radio";
-  // inputStatusLabelNo.textContent = "No: ";
-  // container.appendChild(inputStatusLabelNo);
-  // container.appendChild(inputStatusNo);
+  const inputStatusNo = document.createElement("input");
+  const inputStatusLabelNo = document.createElement("label");
+  inputStatusNo.type = "radio";
+  inputStatusNo.name = "status";
+  inputStatusNo.value = "no";
+  inputStatusLabelNo.textContent = "No: ";
+  container.appendChild(inputStatusLabelNo);
+  container.appendChild(inputStatusNo);
 
   const btnAdd = document.createElement("button");
   btnAdd.id="addBtn";
@@ -107,14 +111,29 @@ function menu() {
 } 
 
 function createBook() {
-  console.log("hi"); 
   const titleValue = document.getElementById("title");
   const authorValue = document.getElementById("author");
   const pagesValue = document.getElementById("pages");
-  const statusValue = document.getElementById("status");  
+  const statusValue = document.querySelector(`input[name="status"]:checked`);  
   addBookToLibrary(titleValue.value, authorValue.value, pagesValue.value, statusValue.value);
   titleValue.value ="";
   authorValue.value = "";
   pagesValue.value = "";
-  statusValue.value = "";
+  resetRadioButtons();
+  newBtn.style.display = "inline-block";
+  container.innerHTML = "";
 }
+
+function resetRadioButtons() {
+  const radioButtons = document.querySelectorAll('input[name="status"]');
+  radioButtons.forEach(button => {
+    button.checked = false; 
+  });
+}
+
+Book.prototype.toggleFunction = function (i) {
+  this.status = this.status === "no" ? "yes" : "no";
+  makeShelf();
+}
+
+ 

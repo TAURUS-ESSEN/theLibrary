@@ -5,7 +5,14 @@
     font-size: 1.2rem;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
+a:hover {
+  font-weight: 700;
+}
  
 table {
   border-collapse: collapse;
@@ -58,42 +65,33 @@ th {
 
 .header {
     grid-row: 1;
-    background-color: rgb(251, 250, 249);  
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-.shelf {
-    grid-row: 2;
- /*   margin: 0 auto; */
-    justify-items: center;
+.logo {
+  position: absolute;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  
 }
 
+.logo img {
+  width: 100px;
+}
 
-button.btnNew {
-    background-color: #acacac;
-    font-size: 2rem;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 2px solid black;
-    transition: background 0.3s, transform 0.2s;
-    }
-    
-    button.btnNew:hover {
-    background-color: #8f8f8f;
-    color: white;
-    transform: translateY(-2px);
-  }
-    
-  button.btnNew:active {
-    transform: translateY(2px);
-  }
-
+.shelf {
+    grid-row: 2;
+    justify-items: center;
+}
+ 
   .addForm {
     display: flex;
     gap:10px;
     align-items: center;
+    flex-wrap: wrap;
   }
   .addForm input {
     border-radius: 5px;
@@ -101,11 +99,27 @@ button.btnNew {
     padding: 5px;
   }
 
-  .addBtn {
-    padding: 5px;
-    background-color: #1232cf;
-    border-radius: 5px;
+  #pages {
+    width: 60px;
   }
+
+  #author {
+    width: 150px;
+  }
+
+
+.addBtn{
+    border-radius: 10px;
+    color: white;
+    transition: .2s linear;
+    background: #1b1b1b;
+    padding: 10px;
+}
+
+.addBtn:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(23, 232, 131);
+    color: rgb(23, 232, 131);
+}
 
 .btnDel {
     border-radius: 10px;
@@ -119,3 +133,17 @@ button.btnNew {
     box-shadow: 0 0 0 2px white, 0 0 0 4px #f83c4f;
     color: red;
 }
+
+.newBtn{
+  border-radius: 10px;
+  color: white;
+  transition: .2s linear;
+  background: #1b1b1b;
+  padding: 10px;
+}
+
+.newBtn:hover {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(23, 232, 131);
+  color: rgb(23, 232, 131);
+}
+
